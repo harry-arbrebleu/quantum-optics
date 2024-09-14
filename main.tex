@@ -1,0 +1,124 @@
+\documentclass{report}
+\input{head.tex}
+\begin{document}
+  \maketitle
+  \tableofcontents
+  \chapter{Gaussビームの振る舞い}
+    ここでは，Maxwell方程式に従う電磁波のうち，強度分布がGaussビームになるものについて考える．
+    Gaussビームは強度分布がGauss分布に従う電磁波である．
+    以下の議論により，そのような電磁波は直進することが分かる．
+    \section{物質中のMaxwell方程式}
+      物質中のMaxwell方程式は，
+      \begin{align}
+        \div \bm{E} &= \frac{\rho}{\epsilon_r\epsilon_0} \label{maxwell-1} \\ 
+        \div \bm{B} &= 0 \label{maxwell-2} \\
+        \rot \bm{E} &= -\pdv{\bm{B}}{t}\label{maxwell-3} \\
+        \rot \bm{B} &= \mu_r\mu_0\bm{i} + \mu_r\epsilon_r\mu_0\epsilon_0\pdv{\bm{E}}{t}\label{maxwell-4}
+      \end{align}
+      ただし，$\epsilon_0$，$\mu_0$は真空中の誘電率と真空中の透磁率，$\epsilon_r$，$\mu_r$は物質の比誘電率と物質の比透磁率である．
+      また，$\bm{E}$，$\bm{B}$は電場と磁場，$\bm{i}$は電流密度，$\rho$は電荷密度である．
+      $\rho = 0$，$\bm{i} = 0$のときを考えると，
+      \begin{align}
+        \div \bm{E} &= 0 \label{maxwell-5} \\ 
+        \div \bm{B} &= 0 \label{maxwell-6} \\
+        \rot \bm{E} &= -\pdv{\bm{B}}{t} \label{maxwell-7} \\
+        \rot \bm{B} &= \mu_r\epsilon_r\mu_0\epsilon_0\pdv{\bm{E}}{t}\label{maxwell-8}
+      \end{align}
+      となる．
+      \refe{maxwell-7}に左から$\rot$を作用させると，
+      \begin{align}
+        &\rot \qty(\rot \bm{E}) = -\pdv{t}\qty(\rot \bm{B}) \\
+        &\Leftrightarrow -\laplacian \bm{E} = -\pdv{t}\qty(\rot \bm{B}) \label{maxwell-9}
+      \end{align}
+      となる．\refe{maxwell-9}に\refe{maxwell-8}を代入すると，
+      \begin{align}
+        \laplacian \bm{E} - \frac{n^2}{c^2}\pdv[2]{\bm{E}}{t} = 0\label{maxwell-10}
+      \end{align}
+      となる．ただし，$n = \sqrt{\epsilon_r\mu_r}$，$c = 1 / \sqrt{\epsilon_0\mu_0}$である．
+    \section{Gaussビームでの電場の表式}
+      仮定より，今考えている電磁波はGaussビームであるから円筒座標系$(r, \theta, z)$を用いて，\refe{maxwell-10}を議論する．
+      $\bm{E}$が$z$軸正方向に進行する波とすると，
+      \begin{align}
+        E(r, \theta, z, t) = E_0(r, z)\exp\qty(i(kz - \omega t)) \label{maxwell-11}
+      \end{align}
+      と書ける．ただし，$k = 2\pi / \lambda = n\omega/c$である．%\refe{maxwell-11}が$\theta$に対して変化しないこと
+      \subsection{ラプラシアンの計算}
+        \refe{maxwell-11}のラプラシアンについて．
+        \begin{align}
+          \laplacian &= \pdv[2]{x} + \pdv[2]{y} + \pdv[2]{z} 
+        \end{align}
+        である．$(x, y, z)$から$(r, \theta, z)$への変換を考える．チェーンルールにより，
+        \begin{align}
+          \pdv{x} = \pdv{r}{x}\pdv{r} + \pdv{\theta}{x}\pdv{\theta} \\ 
+          \pdv{y} = \pdv{r}{y}\pdv{r} + \pdv{\theta}{y}\pdv{\theta} \\
+        \end{align}
+        である．$\pdv[2]{E}{x}$について考える．
+        \begin{align}
+          \pdv[2]{E}{x} &= \pdv{x}\qty(\pdv{E}{x}) \\
+          &= \qty{\pdv{r}{x}\pdv{r} + \pdv{\theta}{x}\pdv{\theta}}\qty{\pdv{r}{x}\pdv{E}{r} + \pdv{\theta}{x}\pdv{E}{\theta}} \\
+          &\text{\refe{maxwell-11}が$\theta$に対して変化しないことに注意すると，} \\ 
+          &= \pdv{r}{x}\pdv{r}\qty(\pdv{r}{x}\pdv{E}{r}) + \pdv{\theta}{x}\pdv{\theta}\qty(\pdv{r}{x}\pdv{E}{r})
+        \end{align}
+        となる．同様の計算により，
+        \begin{align}
+          \laplacian E = &\pdv[2]{E}{x} + \pdv[2]{E}{y} + \pdv[2]{E}{z} \\ 
+          = &\pdv{r}{x}\pdv{r}\qty(\pdv{r}{x}\pdv{E}{r}) + \pdv{\theta}{x}\pdv{\theta}\qty(\pdv{r}{x}\pdv{E}{r}) \notag \\ 
+          &+ \pdv{r}{y}\pdv{r}\qty(\pdv{r}{y}\pdv{E}{r}) + \pdv{\theta}{y}\pdv{\theta}\qty(\pdv{r}{y}\pdv{E}{r}) \notag \\ 
+          &+ \pdv[2]{E}{z} \label{laplacian}\\
+        \end{align}
+        である．座標変換を考えると，
+        \begin{align}
+          r^2 &= x^2 + y^2 \\ 
+          \frac{y}{x} &= \tan\theta 
+        \end{align}
+        であるから，
+        \begin{align}
+          &\pdv{r}{x} = \cos \theta, \pdv{r}{y} = \sin \theta \label{div-x-y-r-t-1} \\
+          &\pdv{\theta}{x} = -\frac{\sin \theta}{r}, \pdv{\theta}{y} = \frac{\cos \theta}{r}\label{div-x-y-r-t-2}
+        \end{align}
+        である．\refe{div-x-y-r-t-1}と\refe{div-x-y-r-t-2}を\refe{laplacian}に代入すると，
+        \begin{align}
+          \laplacian E &= \pdv[2]{E}{r} + \frac{1}{r}\pdv{E}{r} + \pdv[2]{E}{z} \label{laplacian-2}
+        \end{align}
+        を得る．\refe{laplacian-2}を\refe{maxwell-10}に用いて，\refe{laplacian}の表記を用いると，
+        \begin{align}
+          \pdv[2]{E_0}{r} + \frac{1}{r}\pdv{E_0}{r} + \pdv[2]{E_0}{z} + 2\i\pdv{E_0}{z} = 0
+        \end{align}
+        となる．$\pdv[2]{E_0}{z}$が他の項に比べて小さく無視できるとしたとき，
+        \begin{align}
+          \pdv[2]{E_0}{r} + \frac{1}{r}\pdv{E_0}{r} + 2\i\pdv{E_0}{z} = 0 \label{maxwell-electro-field}
+        \end{align}
+        となり，種々の条件を加えて\refe{maxwell-electro-field}について解く．
+      \subsection{一様媒質中でのGaussビーム}
+        電磁波が屈折率$n$で一様な媒質中を伝播するとする．
+        このとき，$E_0(r, z)$は，
+        \begin{align}
+          E_0(r, z) = \exp\qty(\i P(z) + \frac{\i k}{2q(z)}r^2) \label{condition-1-e0}
+        \end{align}
+        と書ける．\refe{condition-1-e0}を\refe{maxwell-electro-field}に代入する．
+        \begin{align}
+          \pdv[2]{E_0}{r} &= \exp\qty(\i P(z))\pdv{r}\qty[\frac{\i k}{2q(z)}\exp\qty(\frac{\i k}{2q(z)}r^2)] \\
+          &= \qty[\qty(\frac{\i k}{2q(z)})^2r^2 + \frac{\i k}{2q(z)}]\exp\qty(\i P(z) + \frac{\i k}{2q(z)}r^2) \\
+          \frac{1}{r}\pdv{E_0}{r} &= \frac{\i k}{q(z)}\exp\qty(\i P(z) + \frac{\i k}{2q(z)}r^2) \\ 
+          2\i k\pdv{E_0}{z} &= 2\i k\qty[\i \dv{p}{z} + \frac{\i kr^2}{2}\dv{z}\qty(\frac{1}{q(z)})]\exp\qty(\i P(z) + \frac{\i k}{2q(z)}r^2) 
+        \end{align}
+        となる．\refe{maxwell-electro-field}に代入して，$r^2$の係数を比較すると，
+        \begin{align}
+          \begin{dcases}
+            \qty(\frac{1}{q(z)})^2 + \dv{z}\qty(\frac{1}{q(z)}) = 0 \\
+            \dv{p}{z} = \frac{\i}{q(z)}
+          \end{dcases}\label{condition-2}
+        \end{align}
+        を得る．
+        \refe{condition-2}を解くと，
+        \begin{align}
+          \begin{dcases}
+            q(z) = z + q_0 \\
+            p(z) = \i \ln\qty(1 + \frac{z}{q_0})
+          \end{dcases}
+        \end{align}
+        を得る．
+      % \subsection{一様でない媒質中を伝搬するとき}
+    \section{}
+  \appendix
+\end{document}
