@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import math
 import pickle
 
-rows = 5
-cols = 5
+rows = 1
+cols = 1
 n = rows * cols
 q, p, tau = sp.symbols('q p tau')
 i = sp.I
@@ -35,7 +35,7 @@ for s in range(n):
     print(func)
 fig = plt.figure(figsize=(15, 10))
 plt.rcParams['font.size'] = 14
-plt.rcParams['text.usetex'] = True
+# plt.rcParams['text.usetex'] = True
 plt.rcParams['font.family'] = 'serif'
 with open('w.pkl', 'wb') as f:
     pickle.dump(w, f)
@@ -48,8 +48,8 @@ for s in range(n):
     col = s % cols
     ax = fig.add_subplot(rows, cols, s + 1, projection='3d')
     w_numeric = sp.lambdify([q, p], w[s], "numpy")
-    q_vals = np.linspace(-1.5, 1.5, 1000)
-    p_vals = np.linspace(-1.5, 1.5, 1000)
+    q_vals = np.linspace(-1.5, 1.5, 10000)
+    p_vals = np.linspace(-1.5, 1.5, 10000)
     Q, P = np.meshgrid(q_vals, p_vals)
     ax.plot_surface(Q, P, w_numeric(Q, P), cmap="coolwarm")
     ax.set_xlabel(r'$q$')
@@ -58,5 +58,5 @@ for s in range(n):
     # ax.set_zlabel(fr"${t}$")
     ax.set_title(fr"$|{s}\rangle$")
 plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1, wspace=0.3, hspace=0.3)
-plt.savefig('./image/wigner_plots.pdf')
+# plt.savefig('./image/wigner_plots.pdf')
 plt.show()
